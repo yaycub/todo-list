@@ -58,6 +58,7 @@ class TodoApp extends Component {
                     todoList.update({ todos });
                 }
                 catch (err) {
+                    error.textContent = err;
                     console.log(err);
                 }
                 finally {
@@ -78,6 +79,7 @@ class TodoApp extends Component {
                     todoList.update({ todos });
                 }
                 catch (err) {
+                    error.textContent = err;
                     console.log(err);
                 }
                 finally {
@@ -96,6 +98,7 @@ class TodoApp extends Component {
             todoList.update({ todos });
         }
         catch (err) {
+            error.textContent = err;
             console.log(err);
         }
         finally {
