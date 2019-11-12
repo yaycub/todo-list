@@ -24,7 +24,10 @@ app.get('/api/todos', async (req, res) => {
 
     try {
         const result = await client.query(`
-            
+            SELECT
+                task,
+                completed
+            FROM todos
         `);
 
         res.json(result.rows);
