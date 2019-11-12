@@ -76,6 +76,7 @@ class TodoApp extends Component {
                     todos.splice(index, 1);
     
                     todoList.update({ todos });
+                    location.reload();
                 }
                 catch (err) {
                     console.log(err);

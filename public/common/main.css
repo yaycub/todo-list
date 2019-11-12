@@ -10,3 +10,33 @@ body {
     box-sizing: border-box;
 }
 
+main{
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.todo-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+}
+
+.completed{
+    text-decoration: line-through;
+}
+
+span{
+    margin-right: 20px;
+}
+
+form input{
+    outline: none;
+    width: 250px;
+    height: 25px;
+    border: 1px solid black;
+    border-radius: 2px;
+}

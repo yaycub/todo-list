@@ -26,11 +26,11 @@ class TodoItem extends Component {
         const todo = this.props.todo;
 
         return `
-            <li class="cat-type">
-                <span class="${todo.complete ? 'inactive' : ''}">${todo.task}</span>
+            <li class="todo-item">
+                <span class="${todo.complete ? 'completed' : ''}">${todo.task}</span>
                 <div>
                     <button class="inactive-button">
-                        Make ${todo.complete ? 'Active' : 'Inactive'}
+                        Mark ${todo.complete ? 'Incomplete' : 'Complete'}
                     </button>
                     
                     <button class="remove-button">

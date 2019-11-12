@@ -46,7 +46,7 @@ export async function updateTodo(todo) {
 }
 
 export async function removeTodo(id) {  
-    const url = `${URL}/types/${id}`;
+    const url = `${URL}/todos/${id}`;
     return fetchWithError(url, {
         method: 'DELETE'
     });
