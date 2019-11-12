@@ -12,20 +12,43 @@ async function fetchWithError(url, options) {
     }
 }
 
-export function getTodos() {  
+export async function getTodos() {  
     const url = `${URL}/todos`;
     return fetchWithError(url);
 }
 
-export function addTodo(todo) {  
-    
+export async function addTodo(todo) {  
+    const url = `${URL}/todos`;
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(todo)
+    });
+
+    const data = await response.json();
+    return data;
 }
 
-export function updateTodo(todo) {  
-    
+export async function updateTodo(todo) {  
+    const url = `${URL}/todos/${todo.id}`;
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(todo)
+    });
+
+    const data = await response.json();
+    return data;
 }
 
-export function removeTodo(todoId) {  
-    
+export async function removeTodo(id) {  
+    const url = `${URL}/types/${id}`;
+    return fetchWithError(url, {
+        method: 'DELETE'
+    });
 }
 
