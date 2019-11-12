@@ -41,64 +41,64 @@ app.get('/api/todos', async (req, res) => {
 
 });
 
-app.post('/api/todos', async (req, res) => {
-    const todo = req.body;
+// app.post('/api/todos', async (req, res) => {
+//     const todo = req.body;
 
-    try {
-        const result = await client.query(`
+//     try {
+//         const result = await client.query(`
             
-        `,
-        [/* pass in data */]);
+//         `,
+//         [/* pass in data */]);
 
-        res.json(result.rows[0]);
-    }
-    catch (err) {
-        console.log(err);
-        res.status(500).json({
-            error: err.message || err
-        });
-    }
-});
+//         res.json(result.rows[0]);
+//     }
+//     catch (err) {
+//         console.log(err);
+//         res.status(500).json({
+//             error: err.message || err
+//         });
+//     }
+// });
 
-app.put('/api/todos/:id', async (req, res) => {
-    const id = req.params.id;
-    const todo = req.body;
+// app.put('/api/todos/:id', async (req, res) => {
+//     const id = req.params.id;
+//     const todo = req.body;
 
-    try {
-        const result = await client.query(`
+//     try {
+//         const result = await client.query(`
             
-        `, [/* pass in data */]);
+//         `, [/* pass in data */]);
      
-        res.json(result.rows[0]);
-    }
-    catch (err) {
-        console.log(err);
-        res.status(500).json({
-            error: err.message || err
-        });
-    }
-});
+//         res.json(result.rows[0]);
+//     }
+//     catch (err) {
+//         console.log(err);
+//         res.status(500).json({
+//             error: err.message || err
+//         });
+//     }
+// });
 
-app.delete('/api/todos/:id', async (req, res) => {
-    // get the id that was passed in the route:
-    const id = 0; // ???
+// app.delete('/api/todos/:id', async (req, res) => {
+//     // get the id that was passed in the route:
+//     const id = 0; // ???
 
-    try {
-        const result = await client.query(`
+//     try {
+//         const result = await client.query(`
          
-        `, [/* pass data */]);
+//         `, [/* pass data */]);
         
-        res.json(result.rows[0]);
-    }
-    catch (err) {
-        console.log(err);
-        res.status(500).json({
-            error: err.message || err
-        });
-    }
-});
+//         res.json(result.rows[0]);
+//     }
+//     catch (err) {
+//         console.log(err);
+//         res.status(500).json({
+//             error: err.message || err
+//         });
+//     }
+// });
 
-// Start the server
+// // Start the server
 app.listen(PORT, () => {
     console.log('server running on PORT', PORT);
 });

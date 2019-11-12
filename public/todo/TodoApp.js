@@ -8,7 +8,7 @@ import { getTodos, addTodo, updateTodo, removeTodo } from '../services/todo-api.
 class TodoApp extends Component {
 
     async onRender(dom) {
-        const header = new Header({ title: 'My Todos' });
+        const header = new Header({ title: 'TODO LIST' });
         dom.prepend(header.renderDOM());
         
         const main = dom.querySelector('main');
@@ -17,12 +17,85 @@ class TodoApp extends Component {
         const loading = new Loading({ loading: true });
         dom.appendChild(loading.renderDOM());
 
-        // initial todo load:
+        const addTodos = new AddTodo({
+            onAdd: async todo => {
+                loading.update({ loading: true });
+                error.textContent = '';
+
+                try {
+                    const saved = await addTodo(todo);
+                    
+                    const todos = this.state.todos;
+                    todos.push(saved);
+
+                    todoList.update({ todos });
+                }
+                catch (err) {
+                    error.textContent = err;
+                    throw err;
+                }
+                finally {
+                    loading.update({ loading: false });
+                }
+            }
+        });
+
+        main.appendChild(addTodos.renderDOM());
+
+        const todoList = new TodoList({ 
+            todos: [],
+            onUpdate: async todo => {
+                loading.update({ loading: true });
+                error.textContent = '';
+
+                try {
+                    const updated = await updateTodo(todo);
+                    
+                    const todos = this.state.todos;
+                    const index = todos.indexOf(todo);
+                    todos.splice(index, 1, updated);
+
+                    todoList.update({ todos });
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                finally {
+                    loading.update({ loading: false });
+                }
+            },
+            onRemove: async todo => {
+                loading.update({ loading: true });
+                error.textContent = '';
+
+                try {
+                    await removeTodo(todo.id);
+                    
+                    const todos = this.state.todos;        
+                    const index = todos.indexOf(todo);
+                    todos.splice(index, 1);
+    
+                    todoList.update({ todos });
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                finally {
+                    loading.update({ loading: false });
+                }
+            }
+        });
+
+        main.appendChild(todoList.renderDOM());
+
         try {
-            
+            const todos = await getTodos();
+            this.state.todos = todos;
+
+            todoList.update({ todos });
         }
         catch (err) {
-            // display error...
+            console.log(err);
         }
         finally {
             loading.update({ loading: false });
