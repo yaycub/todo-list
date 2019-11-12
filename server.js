@@ -41,64 +41,71 @@ app.get('/api/todos', async (req, res) => {
 
 });
 
-// app.post('/api/todos', async (req, res) => {
-//     const todo = req.body;
+app.post('/api/todos', async (req, res) => {
+    const todo = req.body;
 
-//     try {
-//         const result = await client.query(`
-            
-//         `,
-//         [/* pass in data */]);
+    try {
+        const result = await client.query(`
+            INSERT INTO todos(task, complete)
+            VALUES ($1, $2)
+            RETURNING *;
+        `,
+        [todo.task, todo.complete]);
 
-//         res.json(result.rows[0]);
-//     }
-//     catch (err) {
-//         console.log(err);
-//         res.status(500).json({
-//             error: err.message || err
-//         });
-//     }
-// });
+        res.json(result.rows[0]);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({
+            error: err.message || err
+        });
+    }
+});
 
-// app.put('/api/todos/:id', async (req, res) => {
-//     const id = req.params.id;
-//     const todo = req.body;
+app.put('/api/todos/:id', async (req, res) => {
+    const id = req.params.id;
+    const todo = req.body;
 
-//     try {
-//         const result = await client.query(`
-            
-//         `, [/* pass in data */]);
+    try {
+        const result = await client.query(`
+            UPDATE todos
+            SET     task = $2,
+                    complete = $3
+            WHERE  id = $1
+            RETURNING *;
+        `, [id, todo.task, todo.complete]);
      
-//         res.json(result.rows[0]);
-//     }
-//     catch (err) {
-//         console.log(err);
-//         res.status(500).json({
-//             error: err.message || err
-//         });
-//     }
-// });
+        res.json(result.rows[0]);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({
+            error: err.message || err
+        });
+    }
+});
 
-// app.delete('/api/todos/:id', async (req, res) => {
-//     // get the id that was passed in the route:
-//     const id = 0; // ???
+app.delete('/api/todos/:id', async (req, res) => {
+    // get the id that was passed in the route:
+    const id = req.params.id;
 
-//     try {
-//         const result = await client.query(`
-         
-//         `, [/* pass data */]);
+    try {
+        const result = await client.query(`
+            DELETE FROM todos
+            WHERE todos.id = ($1)
+        `, [id]);
         
-//         res.json(result.rows[0]);
-//     }
-//     catch (err) {
-//         console.log(err);
-//         res.status(500).json({
-//             error: err.message || err
-//         });
-//     }
-// });
+        res.json(result.rows[0]);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({
+            error: err.message || err
+        });
+    }
+});
 
-// // Start the server
+// Start the server
 app.listen(PORT, () => {
     console.log('server running on PORT', PORT);
 });
