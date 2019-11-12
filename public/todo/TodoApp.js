@@ -50,12 +50,11 @@ class TodoApp extends Component {
 
                 try {
                     const updated = await updateTodo(todo);
-                    
-                    const todos = this.state.todos;
-                    const index = todos.indexOf(todo);
-                    todos.splice(index, 1, updated);
-
-                    todoList.update({ todos });
+                    const todosUpdated = this.state.todos;
+                    const index = todosUpdated.indexOf(todo);
+                    todosUpdated.splice(index, 1, updated);
+                
+                    todoList.update({ todos: todosUpdated });
                 }
                 catch (err) {
                     error.textContent = err;
@@ -63,7 +62,6 @@ class TodoApp extends Component {
                 }
                 finally {
                     loading.update({ loading: false });
-                    location.reload();
                 }
             },
             onRemove: async todo => {
@@ -72,12 +70,11 @@ class TodoApp extends Component {
 
                 try {
                     await removeTodo(todo.id);
+                    const todosAfterRemoval = this.state.todos;
+                    const index = todosAfterRemoval.indexOf(todo);
+                    todosAfterRemoval.splice(index, 1);
                     
-                    const todos = this.state.todos;        
-                    const index = todos.indexOf(todo);
-                    todos.splice(index, 1);
-    
-                    todoList.update({ todos });
+                    todoList.update({ todos: todosAfterRemoval });
                 }
                 catch (err) {
                     error.textContent = err;
@@ -85,7 +82,6 @@ class TodoApp extends Component {
                 }
                 finally {
                     loading.update({ loading: false });
-                    location.reload();
                 }
             }
         });

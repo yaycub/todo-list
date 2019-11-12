@@ -94,6 +94,7 @@ app.delete('/api/todos/:id', async (req, res) => {
         const result = await client.query(`
             DELETE FROM todos
             WHERE todos.id = ($1)
+            RETURNING *;
         `, [id]);
         
         res.json(result.rows[0]);

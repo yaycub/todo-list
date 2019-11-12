@@ -15,10 +15,7 @@ class TodoItem extends Component {
         
         const removeButton = dom.querySelector('.remove-button');
         removeButton.addEventListener('click', () => {
-            const confirmed = confirm(`Are you sure you want to remove "${todo.task}"?`);
-            if (confirmed) {
-                onRemove(todo);
-            }
+            onRemove(todo);
         });
     }
 
