@@ -63,6 +63,7 @@ class TodoApp extends Component {
                 }
                 finally {
                     loading.update({ loading: false });
+                    location.reload();
                 }
             },
             onRemove: async todo => {
