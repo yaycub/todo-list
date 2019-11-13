@@ -53,6 +53,7 @@ class TodoApp extends Component {
                     const todosUpdated = this.state.todos;
                     const index = todosUpdated.indexOf(todo);
                     todosUpdated.splice(index, 1, updated);
+
                 
                     todoList.update({ todos: todosUpdated });
                 }

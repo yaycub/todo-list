@@ -29,6 +29,7 @@ app.get('/api/todos', async (req, res) => {
                 task,
                 complete
             FROM todos
+            ORDER BY complete = true
         `);
 
         res.json(result.rows);
