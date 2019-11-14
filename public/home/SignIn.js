@@ -1,6 +1,7 @@
 import Component from '../Component.js';
 
 class SignIn extends Component {
+
     onRender(form) {
         const onSignIn = this.props.onSignIn;
 

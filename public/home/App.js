@@ -36,7 +36,7 @@ class App extends Component {
                 
                 catch (err) {
                     errors.textContent = err;
-                    console.log(err);
+                    throw err;
                 }
             }
         });
@@ -45,15 +45,13 @@ class App extends Component {
         const signIn = new SignIn({
             onSignIn: async credentials => {
                 errors.textContent = '';
-
                 try {
                     const user = await userSignIn(credentials);
                     success(user);
                 }
-
                 catch (err) {
                     errors.textContent = err;
-                    console.log(err);
+                    throw err;
                 }
             }
         });
