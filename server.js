@@ -29,7 +29,7 @@ const authRoutes = createAuthRoutes({
             VALUES ($1, $2)
             RETURNING id, email;
         `,
-        [user.email, hash, user.displayName]
+        [user.email, hash]
         ).then(result => result.rows[0]);
     }
 });
@@ -51,18 +51,16 @@ app.use('/api', ensureAuth);
 
 // *** TODOS ***
 app.get('/api/todos', async (req, res) => {
+    const user = req.userId;
 
     try {
         const result = await client.query(`
-            SELECT
-                id,
-                task,
-                complete
+            SELECT *
             FROM todos
-            JOIN users
-            ON todos.user_id = users.id
+            WHERE user_id = $1
             ORDER BY complete = true
-        `);
+        `,
+        [user]);
 
         res.json(result.rows);
     }
@@ -77,14 +75,15 @@ app.get('/api/todos', async (req, res) => {
 
 app.post('/api/todos', async (req, res) => {
     const todo = req.body;
+    const user = req.userId;
 
     try {
         const result = await client.query(`
-            INSERT INTO todos(task, complete)
-            VALUES ($1, $2)
-            RETURNING *;
+            INSERT INTO todos(user_id, task, complete)
+            VALUES ($1, $2, $3)
+            RETURNING *
         `,
-        [todo.task, todo.complete]);
+        [user, todo.task, todo.complete]);
 
         res.json(result.rows[0]);
     }
