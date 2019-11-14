@@ -59,6 +59,8 @@ app.get('/api/todos', async (req, res) => {
                 task,
                 complete
             FROM todos
+            JOIN users
+            ON todos.user_id = users.id
             ORDER BY complete = true
         `);
 
